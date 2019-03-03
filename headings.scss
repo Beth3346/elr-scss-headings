@@ -1,0 +1,41 @@
+@import 'src/main';
+
+.elr-heading-divider,
+.elr-heading-pill,
+.elr-heading-rounded,
+.elr-heading-shortline,
+.elr-heading-underline {
+  width: 100%;
+  margin: 20px 0;
+  font-size: 24px;
+}
+
+.elr-heading-rounded {
+  @include elr-heading-rounded;
+}
+
+.elr-heading-pill {
+  @include elr-heading-pill;
+}
+
+.elr-heading-underline {
+  @include elr-heading-underline;
+}
+
+.elr-heading-shortline {
+  @include elr-heading-shortline;
+}
+
+.elr-heading-divider {
+  @include elr-heading-divider;
+}
+
+.elr-heading-icon {
+  @include elr-heading-icon;
+  width: 100%;
+  margin: 20px 0;
+
+  .elr-icon-group-subheading {
+    color: #666;
+  }
+}
