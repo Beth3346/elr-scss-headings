@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 const path = require('path');
 const sass = require('gulp-sass');
-const scsslint = require('gulp-scss-lint');
+// const scsslint = require('gulp-scss-lint');
 const plumber = require('gulp-plumber');
 const autoprefixer = require('gulp-autoprefixer');
 const cleanCSS = require('gulp-clean-css');
@@ -10,7 +10,8 @@ const del = require('del');
 
 var paths = {
   app: 'dist/',
-  css: 'dist/css/'
+  css: 'dist/css/',
+  images: 'dist/images/'
 };
 
 // BrowserSync
@@ -32,15 +33,27 @@ function browserSyncReload(done) {
 
 // Clean assets
 function clean() {
-  return del(['./dist/css/']);
+  return del(['./dist/css/', './dist/images/', './dist/index.html']);
+}
+
+// Copy HTML
+function copyIndex() {
+  return gulp.src('./index.html')
+    .pipe(gulp.dest(paths.app))
+}
+
+function copyImages() {
+  return gulp.src('./images/**/*.{gif,jpg,png,svg}')
+    .pipe(gulp.dest(paths.images))
 }
 
 // Watch files
 function watchFiles(done) {
+  copyImages();
+
   gulp.watch(['./**/*.scss', 'dist/index.html'], () => {
     return gulp
       .src('./*.scss')
-      .pipe(scsslint())
       .pipe(plumber())
       .pipe(
         sass({
@@ -50,21 +63,22 @@ function watchFiles(done) {
       .pipe(gulp.dest(paths.css))
       .pipe(
         autoprefixer({
-          browsers: ['last 3 versions'],
           cascade: false
         })
       )
       .pipe(gulp.dest(paths.css))
       .pipe(cleanCSS({ debug: true }))
       .pipe(gulp.dest(paths.css))
+      .pipe(copyIndex())
       .pipe(browserSyncReload(done));
   });
 }
 
 gulp.task('default', () => {
+  copyImages();
+
   return gulp
     .src('./*.scss')
-    .pipe(scsslint())
     .pipe(plumber())
     .pipe(
       sass({
@@ -74,16 +88,18 @@ gulp.task('default', () => {
     .pipe(gulp.dest(paths.css))
     .pipe(
       autoprefixer({
-        browsers: ['last 3 versions'],
         cascade: false
       })
     )
     .pipe(gulp.dest(paths.css))
     .pipe(cleanCSS({ debug: true }))
-    .pipe(gulp.dest(paths.css));
+    .pipe(gulp.dest(paths.css))
+    .pipe(copyIndex());
 });
 
-const watch = gulp.parallel(watchFiles, browserSync);
+const watch = gulp.parallel(copyIndex, copyImages, watchFiles, browserSync);
 
 exports.clean = clean;
 exports.watch = watch;
+exports.copyIndex = copyIndex;
+exports.copyImages = copyImages;
