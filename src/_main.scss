@@ -94,39 +94,44 @@
 @mixin elr-heading-underline($config: ()) {
   $config: extend(
     (
-      bdr-color: #ccc
+      border-color: #ccc,
+      border-thickness: 1px
     ),
     $config
   );
 
-  $bdr-color: map-get($config, bdr-color);
+  $border-color: map-get($config, border-color);
+  $border-thickness: map-get($config, border-thickness);
 
-  border-bottom: 1px solid $bdr-color;
+  border-bottom: $border-thickness solid $border-color;
   padding-bottom: 5px;
 }
 
 @mixin elr-heading-shortline($config: ()) {
   $config: extend(
     (
-      bdr-color: #1976d2,
+      border-color: #1976d2,
       align: center,
       width: 80px,
-      font-size: 24px
+      font-size: 24px,
+      border-thickness: 1px
     ),
     $config
   );
 
-  $bdr-color: map-get($config, bdr-color);
+  $border-thickness: map-get($config, border-thickness);
+  $border-color: map-get($config, border-color);
   $align: map-get($config, align);
   $width: map-get($config, width);
   $font-size: map-get($config, font-size);
 
   @include elr-underline(
     $config: (
-      color: $bdr-color,
+      color: $border-color,
       width: $width,
       align: $align,
-      spacing: $font-size
+      spacing: ($font-size / 2),
+      thickness: $border-thickness
     )
   );
   text-align: $align;
@@ -137,7 +142,8 @@
     (
       line-width: 80px,
       line-color: #1976d2,
-      max-width: 550px
+      max-width: 550px,
+      thickness: 1px
     ),
     $config
   );
@@ -145,6 +151,7 @@
   $line-width: map-get($config, line-width);
   $line-color: map-get($config, line-color);
   $max-width: map-get($config, max-width);
+  $thickness: map-get($config, thickness);
 
   text-align: center;
   position: relative;
@@ -158,7 +165,7 @@
   &::after {
     content: '';
     width: $line-width;
-    height: 1px;
+    height: $thickness;
     background-color: $line-color;
     position: absolute;
     top: 50%;
