@@ -140,36 +140,42 @@
 @mixin elr-heading-divider($config: ()) {
   $config: extend(
     (
-      line-width: 80px,
       line-color: #1976d2,
-      max-width: 550px,
       thickness: 1px
     ),
     $config
   );
 
-  $line-width: map-get($config, line-width);
   $line-color: map-get($config, line-color);
-  $max-width: map-get($config, max-width);
   $thickness: map-get($config, thickness);
 
   text-align: center;
   position: relative;
-  width: auto;
-  max-width: $max-width;
-  max-width: max-content;
-  padding-left: to-rems($line-width + 20);
-  padding-right: to-rems($line-width + 20);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    flex: 2;
+    max-width: 500px;
+    max-width: max-content;
+    display: block;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  &::before,
+  &::after {
+    flex: 1;
+  }
 
   &::before,
   &::after {
     content: '';
-    width: $line-width;
+    width: 100%;
     height: $thickness;
     background-color: $line-color;
-    position: absolute;
-    top: 50%;
-    left: 0;
     display: block;
   }
 
