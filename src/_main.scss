@@ -1,4 +1,5 @@
-@import 'node_modules/elr-scss-functions/main';
+@use "sass:math";
+@import "node_modules/elr-scss-functions/src/main";
 
 // scss-lint:disable DuplicateProperty
 // Headings
@@ -12,7 +13,7 @@
       width: 100px,
       align: center,
       spacing: 30px,
-      thickness: 1px
+      thickness: 1px,
     ),
     $config
   );
@@ -28,7 +29,7 @@
   }
 
   &:after {
-    content: '';
+    content: "";
     width: $width;
     height: $thickness;
     border-bottom: $thickness solid $color;
@@ -51,19 +52,19 @@
 @mixin elr-heading-rounded($config: ()) {
   $config: extend(
     (
-      bk-color: #333,
+      background-color: #333,
       text-color: #fff,
-      border-radius: 3px
+      border-radius: 3px,
     ),
     $config
   );
 
-  $bk-color: map-get($config, bk-color);
+  $background-color: map-get($config, background-color);
   $text-color: map-get($config, text-color);
   $border-radius: map-get($config, border-radius);
 
   padding: to-rems(10px);
-  background-color: $bk-color;
+  background-color: $background-color;
   color: $text-color;
 
   @if $border-radius > 0 {
@@ -76,17 +77,17 @@
 @mixin elr-heading-pill($config: ()) {
   $config: extend(
     (
-      bk-color: #333,
-      text-color: #fff
+      background-color: #333,
+      text-color: #fff,
     ),
     $config
   );
 
-  $bk-color: map-get($config, bk-color);
+  $background-color: map-get($config, background-color);
   $text-color: map-get($config, text-color);
 
   padding: 10px 20px;
-  background-color: $bk-color;
+  background-color: $background-color;
   color: $text-color;
   border-radius: 50px;
 }
@@ -95,7 +96,7 @@
   $config: extend(
     (
       border-color: #ccc,
-      border-thickness: 1px
+      border-thickness: 1px,
     ),
     $config
   );
@@ -114,7 +115,7 @@
       align: center,
       width: 80px,
       font-size: 24px,
-      border-thickness: 1px
+      border-thickness: 1px,
     ),
     $config
   );
@@ -130,8 +131,10 @@
       color: $border-color,
       width: $width,
       align: $align,
-      spacing: ($font-size / 2),
-      thickness: $border-thickness
+      spacing: (
+        math.div($font-size, 2),
+      ),
+      thickness: $border-thickness,
     )
   );
   text-align: $align;
@@ -141,7 +144,7 @@
   $config: extend(
     (
       line-color: #1976d2,
-      thickness: 1px
+      thickness: 1px,
     ),
     $config
   );
@@ -172,7 +175,7 @@
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     width: 100%;
     height: $thickness;
     background-color: $line-color;
@@ -189,7 +192,7 @@
   $config: extend(
     (
       icon-color: #1976d2,
-      font-size: 24px
+      font-size: 24px,
     ),
     $config
   );
